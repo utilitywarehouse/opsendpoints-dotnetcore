@@ -8,8 +8,6 @@ namespace Utilitywarehouse.OpsEndpoints
 
     internal class ApplicationHealthModel : IApplicationHealthModel
     {
-        private ReadyFunc _ready;
-
         internal ApplicationHealthModel(string name, string description)
         {
             Name = name;
@@ -30,7 +28,7 @@ namespace Utilitywarehouse.OpsEndpoints
 
         public bool Ready()
         {
-            return _ready();
+            return ReadyFunc();
         }
 
         internal void AddOwners(params Owner[] owners)
@@ -50,7 +48,7 @@ namespace Utilitywarehouse.OpsEndpoints
 
         internal void AddReadyFunc(ReadyFunc ready)
         {
-            _ready = ready;
+            ReadyFunc = ready;
         }
 
         internal void AddRevision(string revision)
@@ -60,8 +58,10 @@ namespace Utilitywarehouse.OpsEndpoints
 
         internal void UseHealthChecksForReady()
         {
-            _ready = () => Health().Health != OpsEndpoints.Health.Unhealthy;
+            ReadyFunc = () => Health().Health != OpsEndpoints.Health.Unhealthy;
         }
+
+        internal ReadyFunc ReadyFunc { get; private set; }
 
         public HealthInfo Health()
         {

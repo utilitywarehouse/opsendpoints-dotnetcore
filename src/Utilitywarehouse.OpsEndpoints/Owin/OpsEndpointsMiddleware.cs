@@ -76,15 +76,15 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
 
             return new Dictionary<string, HttpHandler>
             {
-                {"about", about},
-                {"health", health},
-                {"ready", ready}
+                {"/about", about},
+                {"/health", health},
+                {"/ready", ready}
             };
         }
 
         public Task Invoke(HttpContext context)
         {
-            if (context.Request.Path.StartsWithSegments("/_/", out var _, out var segment))
+            if (context.Request.Path.StartsWithSegments("/__", out var _, out var segment))
             {
                 Func<HttpContext, Task> handler;
                 if (_handlers.TryGetValue(segment, out handler))

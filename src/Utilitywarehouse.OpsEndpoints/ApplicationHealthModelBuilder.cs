@@ -168,6 +168,10 @@ namespace Utilitywarehouse.OpsEndpoints
             {
                 errors.Add("revision");
             }
+            if (_applicationHealthModel.ReadyFunc == null)
+            {
+                errors.Add("readyFunc");
+            }
 
 
             if (errors.Count == 0) return _applicationHealthModel;
