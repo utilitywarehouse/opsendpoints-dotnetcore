@@ -7,10 +7,27 @@ namespace Utilitywarehouse.OpsEndpoints.Tests
 {
     public class MiddleWareTests
     {
-        [Fact]
-        public void Test1()
+        private class DummyCheck : ICheck
         {
-            var config = new OpsEndpointsMiddlewareOptions();
+            public CheckResult Run()
+            {
+                return CheckResult.Healthy("dummy", "output");
+            }
+        }
+
+        [Fact]
+        public void CanCallAbout()
+        {
+            var builder = new ApplicationHealthModelBuilder("some app", "some description")
+                .WithOwners(new Owner("ownername", "ownerslack"))
+                .WithLinks(new Link("link", "description"))
+                .WithRevision("abcdefg")
+                .WithChecks(new DummyCheck());
+            var model = builder.Build();
+            var config = new OpsEndpointsMiddlewareOptions
+            {
+                HealthModel = model
+            };
             var server = new TestServer(new WebHostBuilder().Configure(app => app.UseOpsEndpoints(config)));
         }
     }

@@ -15,6 +15,8 @@ namespace Utilitywarehouse.OpsEndpoints
         private readonly ApplicationHealthModel _applicationHealthModel;
         private readonly bool _failOnBuildError;
 
+        private ApplicationHealthModelBuilder() { }
+
         /// <summary>
         /// ApplicationHealthModelBuilder constructor
         /// </summary>
@@ -176,11 +178,11 @@ namespace Utilitywarehouse.OpsEndpoints
             {
                 throw new Exception(
                     string.Format(
-                        "Could not initialize ApplicationHealthModel. Errors: $0",
+                        "Could not initialize ApplicationHealthModel. Missing Properties:: {0}",
                         error));
             }
 
-            Debug.WriteLine(string.Format("Warning: The following fields were not set: $0", error));
+            Debug.WriteLine(string.Format("Warning: The following Properties were not set: {0}", error));
             return _applicationHealthModel;
         }
 

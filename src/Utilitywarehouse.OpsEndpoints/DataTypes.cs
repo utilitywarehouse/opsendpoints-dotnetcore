@@ -62,28 +62,31 @@ namespace Utilitywarehouse.OpsEndpoints
         public readonly string Output;
         public readonly string Action;
         public readonly string Impact;
+        public readonly string Name;
 
-        private CheckResult(Health health, string output, string action, string impact)
+        private CheckResult(Health health, string name, string output, string action, string impact)
         {
             Health = health;
             Output = output;
             Action = action;
             Impact = impact;
+            Name = name;
         }
 
-        public static CheckResult Healthy(string output)
+
+        public static CheckResult Healthy(string name, string output)
         {
-            return new CheckResult(OpsEndpoints.Health.Healthy, output, string.Empty, string.Empty);
+            return new CheckResult(Health.Healthy, name, output, string.Empty, string.Empty);
         }
 
-        public static CheckResult Degraded(string output, string action)
+        public static CheckResult Degraded(string name, string output, string action)
         {
-            return new CheckResult(OpsEndpoints.Health.Degraded, output, action, string.Empty);
+            return new CheckResult(Health.Degraded, name, output, action, string.Empty);
         }
 
-        public static CheckResult Unhealthy(string output, string action, string impact)
+        public static CheckResult Unhealthy(string name, string output, string action, string impact)
         {
-            return new CheckResult(OpsEndpoints.Health.Unhealthy, output, action, impact);
+            return new CheckResult(Health.Unhealthy, name, output, action, impact);
         }
     }
 

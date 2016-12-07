@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using Utilitywarehouse.OpsEndpoints.DTO;
+
 using HttpHandler = System.Func<Microsoft.AspNetCore.Http.HttpContext, System.Threading.Tasks.Task>;
 
 namespace Utilitywarehouse.OpsEndpoints.Owin
 {
+    [UsedImplicitly]
     public class OpsEndpointsMiddleware
     {
         private readonly RequestDelegate _next;
@@ -49,7 +51,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             var about = new HttpHandler(context =>
             {
                 var op = options;
-                var result = op.HealthModel.About();
+                var result = op.HealthModel.About().ToAboutResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
                 using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
@@ -62,7 +64,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             var health = new HttpHandler(context =>
             {
                 var op = options;
-                var result = op.HealthModel.Health();
+                var result = op.HealthModel.Health().ToHealthResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
                 using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
