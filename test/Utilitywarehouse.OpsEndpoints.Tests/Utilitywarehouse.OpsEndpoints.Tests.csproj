@@ -33,7 +33,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Utilitywarehouse.OpsEndpoints\Utilitywarehouse.OpsEndpoints.csproj" />
+    <ProjectReference Include="..\..\src\Utilitywarehouse.OpsEndpoints\Utilitywarehouse.OpsEndpoints.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
