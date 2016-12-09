@@ -31,7 +31,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             _serializer = serializer;
         }
 
-        private Dictionary<string, Func<HttpContext, Task>> ConfigureHandlers(OpsEndpointsMiddlewareOptions options)
+        private Dictionary<string, HttpHandler> ConfigureHandlers(OpsEndpointsMiddlewareOptions options)
         {
             var ready = new HttpHandler(context =>
             {
@@ -51,12 +51,12 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             var about = new HttpHandler(context =>
             {
                 var op = options;
-                var result = op.HealthModel.About().ToAboutResponse();
+                AboutResponse response = op.HealthModel.About().ToAboutResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
                 using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
                 {
-                    _serializer.Serialize(writer, result);
+                    _serializer.Serialize(writer, response);
                     return writer.FlushAsync();
                 }
             });
@@ -64,12 +64,12 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             var health = new HttpHandler(context =>
             {
                 var op = options;
-                var result = op.HealthModel.Health().ToHealthResponse();
+                HealthResponse response = op.HealthModel.Health().ToHealthResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
                 using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
                 {
-                    _serializer.Serialize(writer, result);
+                    _serializer.Serialize(writer, response);
                     return writer.FlushAsync();
                 }
             });
