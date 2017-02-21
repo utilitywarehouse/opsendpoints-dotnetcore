@@ -9,7 +9,7 @@ namespace Utilitywarehouse.OpsEndpoints.DTO
         public string Description { get; set; }
         public IList<Owner> Owners { get; set; }
         public IList<Link> Links { get; set; }
-        [JsonProperty(PropertyName = "Build-Info")]
+        [JsonProperty(PropertyName = "Build-info")]
         public BuildInfo BuildInfo { get; set; }
     }
 

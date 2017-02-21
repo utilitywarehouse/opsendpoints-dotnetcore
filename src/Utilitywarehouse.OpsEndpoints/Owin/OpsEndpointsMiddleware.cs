@@ -27,10 +27,6 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
         {
             _next = next;
             _handlers = ConfigureHandlers(options);
-            _serializerSettings = new JsonSerializerSettings
-            {
-                Formatting = Formatting.Indented
-            };
         }
 
         private Dictionary<string, HttpHandler> ConfigureHandlers(OpsEndpointsMiddlewareOptions options)
@@ -57,7 +53,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
 
-                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             });
 
             var health = new HttpHandler(context =>
@@ -67,7 +63,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
 
-                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
             });
 
             return new Dictionary<string, HttpHandler>
@@ -80,9 +76,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
 
         public Task Invoke(HttpContext context)
         {
-            PathString segment = null;
-
-            if (context.Request.Path.StartsWithSegments("/__", out segment))
+            if (context.Request.Path.StartsWithSegments("/__", out var _, out var segment))
             {
                 Func<HttpContext, Task> handler;
                 
