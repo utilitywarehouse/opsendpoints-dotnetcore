@@ -19,16 +19,17 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
     public class OpsEndpointsMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly JsonSerializer _serializer;
         private readonly Dictionary<string, HttpHandler> _handlers;
+        private readonly JsonSerializerSettings _serializerSettings;
 
         public OpsEndpointsMiddleware(RequestDelegate next, OpsEndpointsMiddlewareOptions options)
         {
             _next = next;
             _handlers = ConfigureHandlers(options);
-            var serializer = new JsonSerializer {ContractResolver = new CamelCasePropertyNamesContractResolver()};
-            serializer.Converters.Add(new StringEnumConverter());
-            _serializer = serializer;
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
         private Dictionary<string, HttpHandler> ConfigureHandlers(OpsEndpointsMiddlewareOptions options)
@@ -54,11 +55,8 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 AboutResponse response = op.HealthModel.About().ToAboutResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
-                using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
-                {
-                    _serializer.Serialize(writer, response);
-                    return writer.FlushAsync();
-                }
+
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
             });
 
             var health = new HttpHandler(context =>
@@ -67,11 +65,8 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 HealthResponse response = op.HealthModel.Health().ToHealthResponse();
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
-                using (var writer = new StreamWriter(context.Response.Body, Encoding.UTF8))
-                {
-                    _serializer.Serialize(writer, response);
-                    return writer.FlushAsync();
-                }
+
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
             });
 
             return new Dictionary<string, HttpHandler>
@@ -87,6 +82,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
             if (context.Request.Path.StartsWithSegments("/__", out var _, out var segment))
             {
                 Func<HttpContext, Task> handler;
+                
                 if (_handlers.TryGetValue(segment, out handler))
                 {
                     return handler.Invoke(context);

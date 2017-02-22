@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25920.0
+VisualStudioVersion = 15.0.26206.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CE6B9010-3A87-4217-954A-610CA0DDA92F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilitywarehouse.OpsEndpoints", "src\Utilitywarehouse.OpsEndpoints\Utilitywarehouse.OpsEndpoints.csproj", "{ECF49813-2B0B-441F-838F-35581A197D63}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{BC390BF5-BA16-46DD-9A92-ED0A12B7BAE6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilitywarehouse.OpsEndpoints", "src\Utilitywarehouse.OpsEndpoints\Utilitywarehouse.OpsEndpoints.csproj", "{ECF49813-2B0B-441F-838F-35581A197D63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilitywarehouse.OpsEndpoints.Tests", "test\Utilitywarehouse.OpsEndpoints.Tests\Utilitywarehouse.OpsEndpoints.Tests.csproj", "{AB862E4C-C877-4EBB-83E9-81B60BC9AEE9}"
 EndProject

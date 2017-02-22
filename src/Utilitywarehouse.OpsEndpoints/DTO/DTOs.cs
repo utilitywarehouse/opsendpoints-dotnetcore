@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Utilitywarehouse.OpsEndpoints.DTO
 {
@@ -8,6 +9,7 @@ namespace Utilitywarehouse.OpsEndpoints.DTO
         public string Description { get; set; }
         public IList<Owner> Owners { get; set; }
         public IList<Link> Links { get; set; }
+        [JsonProperty(PropertyName = "Build-info")]
         public BuildInfo BuildInfo { get; set; }
     }
 

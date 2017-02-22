@@ -1,18 +1,18 @@
-﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <ProjectGuid>{AB862E4C-C877-4EBB-83E9-81B60BC9AEE9}</ProjectGuid>
+    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6</PackageTargetFallback>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Version>1.0.2-3</Version>
+    <AssemblyVersion>1.0.2.2</AssemblyVersion>
+    <FileVersion>1.0.2.2</FileVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="**\*.cs" />
-    <EmbeddedResource Include="**\*.resx" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.TestHost">
-      <Version>1.1.0</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.App">
       <Version>1.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Sdk">
@@ -20,20 +20,25 @@
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk">
-      <Version>15.0.0-preview-20161123-03</Version>
+      <Version>15.0.0-preview-20170217-05</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>9.0.1</Version>
     </PackageReference>
     <PackageReference Include="xunit">
-      <Version>2.2.0-beta4-build3444</Version>
+      <Version>2.2.0</Version>
     </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio">
-      <Version>2.2.0-beta4-build1194</Version>
+      <Version>2.2.0</Version>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\Utilitywarehouse.OpsEndpoints\Utilitywarehouse.OpsEndpoints.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+
 </Project>
