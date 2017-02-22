@@ -19,7 +19,6 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
     public class OpsEndpointsMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly JsonSerializer _serializer;
         private readonly Dictionary<string, HttpHandler> _handlers;
         private readonly JsonSerializerSettings _serializerSettings;
 
