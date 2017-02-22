@@ -27,6 +27,10 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
         {
             _next = next;
             _handlers = ConfigureHandlers(options);
+            _serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
         }
 
         private Dictionary<string, HttpHandler> ConfigureHandlers(OpsEndpointsMiddlewareOptions options)
@@ -53,7 +57,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
 
-                return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
             });
 
             var health = new HttpHandler(context =>
@@ -63,7 +67,7 @@ namespace Utilitywarehouse.OpsEndpoints.Owin
                 context.Response.StatusCode = 200;
                 context.Response.ContentType = "application/json";
 
-                return context.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                return context.Response.WriteAsync(JsonConvert.SerializeObject(response, _serializerSettings));
             });
 
             return new Dictionary<string, HttpHandler>
